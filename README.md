@@ -57,24 +57,29 @@ This setup follows the environment configuration from [this tutorial](https://ww
 ### 1. Install ROS2 Humble
 
 Update system packages
-sudo apt update && sudo apt upgrade -y
+
+`sudo apt update && sudo apt upgrade -y`
 
 Add ROS2 repository
+```
 sudo apt install software-properties-common curl -y
 sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
 sudo sh -c 'echo "deb http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2-latest.list'
-
+```
 Install ROS2 Humble Desktop
+<pre>
 sudo apt update
 sudo apt install ros-humble-desktop
+</pre>
 
-text
 
 ### 2. Install micro-ROS Dependencies
 
 Source ROS2 environment
-source /opt/ros/humble/setup.bash
 
+```
+source /opt/ros/humble/setup.bash
+```
 Install micro-ROS agent
 sudo apt install ros-humble-micro-ros-agent
 
