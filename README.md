@@ -57,8 +57,9 @@ This setup follows the environment configuration from [this tutorial](https://ww
 ### 1. Install ROS2 Humble
 
 Update system packages
-
-`sudo apt update && sudo apt upgrade -y`
+```
+sudo apt update && sudo apt upgrade -y
+```
 
 Add ROS2 repository
 ```
@@ -67,10 +68,11 @@ sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | 
 sudo sh -c 'echo "deb http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2-latest.list'
 ```
 Install ROS2 Humble Desktop
-<pre>
+
+```
 sudo apt update
 sudo apt install ros-humble-desktop
-</pre>
+```
 
 
 ### 2. Install micro-ROS Dependencies
@@ -81,31 +83,34 @@ Source ROS2 environment
 source /opt/ros/humble/setup.bash
 ```
 Install micro-ROS agent
+```
 sudo apt install ros-humble-micro-ros-agent
-
+```
 Install image transport plugins (Essential for RViz2 image display)
+```
 sudo apt install ros-humble-image-transport
 sudo apt install ros-humble-image-transport-plugins
 sudo apt install ros-humble-compressed-image-transport
-
-text
+```
 
 ### 3. Setup Arduino IDE
 
 Download and install Arduino IDE 2.x
+```
 wget -O arduino-ide.zip https://downloads.arduino.cc/arduino-ide/arduino-ide_2.2.1_Linux_64bit.zip
 unzip arduino-ide.zip
 sudo mv arduino-ide_* /opt/arduino-ide
 sudo ln -s /opt/arduino-ide/arduino-ide /usr/local/bin/arduino-ide
-
-text
+```
 
 ### 4. Configure ESP32 Board Package
 
 1. Open Arduino IDE
 2. Go to **File** → **Preferences**
 3. Add ESP32 board manager URL:
+```
 https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+```
 
 text
 4. Go to **Tools** → **Board** → **Boards Manager**
@@ -114,19 +119,19 @@ text
 ### 5. Install micro-ROS Arduino Library
 
 Clone micro-ROS Arduino library
+```
 cd ~/Arduino/libraries
 git clone -b humble https://github.com/micro-ROS/micro_ros_arduino.git
-
-text
+```
 
 ## 🚀 Installation
 
 ### 1. Clone Repository
-
+```
 git clone https://github.com/jklee78e/esp32s3-microros-camera.git
 cd esp32s3-microros-camera
+```
 
-text
 
 ### 2. Arduino Code Setup
 
@@ -141,21 +146,21 @@ text
 ## ⚙️ Configuration
 
 Update the network configuration in the Arduino code:
-
+```
 // Network Configuration
 char* ssid = "YOUR_WIFI_SSID"; // Replace with your WiFi SSID
 char* password = "YOUR_WIFI_PASSWORD"; // Replace with your WiFi password
 char* MICRO_ROS_AGENT_IP = "192.168.1.100"; // Replace with your computer's IP
 const int MICRO_ROS_AGENT_PORT = 8888;
-
-text
+```
 
 ### Finding Your Computer's IP Address
 
 Get your IP address
-ip addr show | grep "inet " | grep -v 127.0.0.1
 
-text
+```
+ip addr show | grep "inet " | grep -v 127.0.0.1
+```
 
 ## 🎯 Usage
 
@@ -168,37 +173,38 @@ text
 ### Step 2: Start micro-ROS Agent
 
 Terminal 1: Start micro-ROS agent
+```
 source /opt/ros/humble/setup.bash
 ros2 run micro_ros_agent micro_ros_agent udp4 --port 8888
-
-text
+```
 
 ### Step 3: Setup Static Transform (Required)
 
 Terminal 2: Setup TF frame
+```
 source /opt/ros/humble/setup.bash
 ros2 run tf2_ros static_transform_publisher 0 0 0 0 0 0 map camera_link
-
-text
+```
 
 ### Step 4: Verify Camera Stream
 
 Terminal 3: Check topics
+```
 source /opt/ros/humble/setup.bash
 ros2 topic list
 ros2 topic hz /image/compressed
-
-text
+```
 
 ## 📺 RViz2 Setup
 
 ### Launch RViz2
 
 Terminal 4: Launch RViz2
+
+```
 source /opt/ros/humble/setup.bash
 rviz2
-
-text
+```
 
 ### Configure Image Display
 
@@ -214,9 +220,9 @@ text
 ### Alternative: Use rqt_image_view for Testing
 
 Simple image viewer
+```
 ros2 run rqt_image_view rqt_image_view
-
-text
+```
 
 ## 🔍 Troubleshooting
 
@@ -233,20 +239,23 @@ text
 ### Debug Commands
 
 Check ROS2 ecosystem
+```
 ros2 node list # List active nodes
 ros2 topic list # List available topics
 ros2 topic hz /image/compressed # Check message frequency
-
+```
 Verify image data
+```
 ros2 topic echo /image/compressed --field header
-
+```
 Check TF tree
+```
 ros2 run tf2_tools view_frames.py
-
+```
 Visualize node graph
+```
 ros2 run rqt_graph rqt_graph
-
-text
+```
 
 ### ESP32 Serial Monitor Debug
 
@@ -262,8 +271,6 @@ Monitor the ESP32 output for debugging:
 ✅ System ready!
 📷 JPEG format confirmed
 📷 Image captured: 3364 bytes
-
-text
 
 ## 📊 Technical Specifications
 
